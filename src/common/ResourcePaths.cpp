@@ -76,9 +76,12 @@ QString Cutter::writableLocation(QStandardPaths::StandardLocation type)
 
 QStringList Cutter::getTranslationsDirectories()
 {
+#if QT_VERSION < QT_VERSION_CHECK(6,0,0)
     auto result = locateAll(QStandardPaths::DataLocation, "translations",
                             QStandardPaths::LocateDirectory);
     result << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     return result;
+#endif
+    return QStringList();
 }
 

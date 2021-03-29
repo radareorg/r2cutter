@@ -1082,7 +1082,7 @@ void CutterCore::setConfig(const char *k, const QVariant &v)
     case QVariant::Type::Bool:
         setConfig(k, v.toBool());
         break;
-    case QVariant::Type::Int:
+    case QVariant::Type::Int: // QMetaType::Int:
         setConfig(k, v.toInt());
         break;
     default:
