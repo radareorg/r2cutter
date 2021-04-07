@@ -13,6 +13,12 @@ VERSION = $${CUTTER_VERSION_MAJOR}.$${CUTTER_VERSION_MINOR}.$${CUTTER_VERSION_PA
 # Required QT version
 lessThan(QT_MAJOR_VERSION, 5): error("requires Qt 5")
 # Doesnt build for Qt6 yet... but will do soon
+greaterThan(QT_MAJOR_VERSION, 5): DEFINES += CUTTER_NO_OPENGL_GRAPH
+
+# find_package(Qt6 COMPONENTS SvgWidgets REQUIRED)
+# target_link_libraries(mytarget PRIVATE Qt6::SvgWidgets)
+greaterThan(QT_MAJOR_VERSION, 5): QT+=svgwidgets
+
 
 TRANSLATIONS += translations/ar/cutter_ar.ts \
                 translations/ca/cutter_ca.ts \
@@ -67,6 +73,7 @@ equals(CUTTER_APPVEYOR_R2DEC, true)             CONFIG += CUTTER_APPVEYOR_R2DEC
 equals(CUTTER_R2GHIDRA_STATIC, true)            CONFIG += CUTTER_R2GHIDRA_STATIC
 
 DEFINES += CUTTER_SOURCE_BUILD
+
 
 CUTTER_ENABLE_CRASH_REPORTS {
     message("Crash report support enabled.")

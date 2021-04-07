@@ -98,8 +98,11 @@ bool ExportsProxyModel::filterAcceptsRow(int row, const QModelIndex &parent) con
 {
     QModelIndex index = sourceModel()->index(row, 0, parent);
     auto exp = index.data(ExportsModel::ExportDescriptionRole).value<ExportDescription>();
-
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    return false;
+#else
     return exp.name.contains(filterRegExp());
+#endif
 }
 
 bool ExportsProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
@@ -121,6 +124,7 @@ bool ExportsProxyModel::lessThan(const QModelIndex &left, const QModelIndex &rig
     case ExportsModel::TypeColumn:
         if (leftExp.type != rightExp.type)
             return leftExp.type < rightExp.type;
+        break;
     case ExportsModel::CommentColumn:
         return Core()->getCommentAt(leftExp.vaddr) < Core()->getCommentAt(rightExp.vaddr);
     default:
